@@ -18,13 +18,14 @@ export function dialogFallback() {
 // This handler responds to the success or failure message that the pop-up dialog receives from the identity provider
 // and access token provider.
 async function processMessage(arg) {
-  console.log("Message received in processMessage: " + JSON.stringify(arg));
+  // console.log("Message received in processMessage: " + JSON.stringify(arg));
   let messageFromDialog = JSON.parse(arg.message);
 
   if (messageFromDialog.status === "success") {
     // We now have a valid access token.
     loginDialog.close();
     const response = await sso.makeGraphApiCall(messageFromDialog.result);
+    console.log('fallbackauth')
     writeDataToOfficeDocument(response);
   } else {
     // Something went wrong with authentication or the authorization of the web application.

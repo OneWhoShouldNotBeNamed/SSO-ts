@@ -10,6 +10,7 @@ import { writeDataToOfficeDocument } from "./../taskpane/taskpane";
 let retryGetAccessToken = 0;
 
 export async function getGraphData(): Promise<void> {
+  console.log('getGraphData')
   try {
     let bootstrapToken: string = await OfficeRuntime.auth.getAccessToken({ allowSignInPrompt: true });
     let exchangeResponse: any = await sso.getGraphToken(bootstrapToken);
@@ -20,7 +21,6 @@ export async function getGraphData(): Promise<void> {
       let mfaBootstrapToken: string = await OfficeRuntime.auth.getAccessToken({ authChallenge: exchangeResponse.claims });
       exchangeResponse = sso.getGraphToken(mfaBootstrapToken);
     }
-
     if (exchangeResponse.error) {
       // AAD errors are returned to the client with HTTP code 200, so they do not trigger
       // the catch block below.
